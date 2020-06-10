@@ -48,7 +48,7 @@ public class SimpleController {
 		return person;
 	}
 	
-	@PostMapping(path="/person/op/post", consumes = "application/json")
+	@PostMapping(path="/person/post/json", consumes = "application/json")
 	public Person postPerson(@RequestBody Person newPerson) {
 		logger.info("postPerson  ==> "+ newPerson.toString());
 		Person person = personImpl.postPerson(newPerson);
@@ -56,7 +56,7 @@ public class SimpleController {
 		return person;
 	}
 	
-	@PostMapping(path="/person/json/post", consumes = "application/x-www-form-urlencoded")
+	@PostMapping(path="/person/post/urlencode", consumes = "application/x-www-form-urlencoded")
 	public Person postPerson2( Person newPerson) {
 		logger.info("postPerson2  ==> "+ newPerson.toString());
 		Person person = personImpl.postPerson(newPerson);
