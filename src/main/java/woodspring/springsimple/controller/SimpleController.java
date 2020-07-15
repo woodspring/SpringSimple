@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import woodspring.springsimple.Entity.Person;
+import woodspring.springsimple.service.ConcurrencyService;
 import woodspring.springsimple.service.PersonService;
 
 @RestController
@@ -23,6 +25,10 @@ public class SimpleController {
 	
 	@Autowired 
 	private PersonService personImpl;
+	
+	@Autowired
+	@Qualifier("ExecService")
+	ConcurrencyService execSrv;
 	
 	@GetMapping("/person/before")
 	public List<Person> before() {
@@ -71,6 +77,14 @@ public class SimpleController {
 		Person person = personImpl.replacePerson(newPerson, personId);
 		logger.info("Person:["+ person.toString()+"]");;
 		return person;
+	}
+	
+	@GetMapping("/worker/{taskNum}")
+	public String runExecService(@PathVariable Long taskNum) {
+		logger.info("runExecService taskNum  ==> "+ taskNum);
+		String result = execSrv.runConfdInterval( taskNum);
+		logger.info("ConcurrencyService END:" + result);;
+		return result;
 	}
 	
 
