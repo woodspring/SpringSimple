@@ -33,6 +33,10 @@ public class Statistics {
 	
 	@Column(name="UPBOUND", nullable=false)
 	private Double upBound;
+	
+	private String taskName;
+	private long startTime = System.nanoTime();
+	private long processedTime;
 	public Statistics(Double mean, double stdDev, double confident, Double lowBound, Double upBound) {
 		super();
 		this.mean = mean;
@@ -40,6 +44,11 @@ public class Statistics {
 		this.confident = confident;
 		this.lowBound = lowBound;
 		this.upBound = upBound;
+	}
+	public void setTask(String taskId) {
+		this.taskName = taskId;
+		processedTime = (System.nanoTime() - startTime) / 1000L;
+		
 	}
 	
 

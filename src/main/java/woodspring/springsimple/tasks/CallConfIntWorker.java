@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import woodspring.springsimple.Entity.Statistics;
+import woodspring.springsimple.Entity.StatisticsParam;
 
 public class CallConfIntWorker implements Callable<Statistics>{
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -18,6 +19,13 @@ public class CallConfIntWorker implements Callable<Statistics>{
 	private double confd = 90.0;
 	private boolean loop = true;
 	
+	public CallConfIntWorker( StatisticsParam params) {
+		workerName = params.getWorkerName();
+		samplesSize = Long.valueOf( params.getSamplesSize()).longValue();
+		loopTimes = Long.valueOf( params.getLoopTimes()).longValue();
+		 confd = Double.valueOf( params.getConfd()).doubleValue();
+		 confidentInterval = new ConfidenceInterval(samplesSize, confd);
+	}
 	
 	public CallConfIntWorker( String... params) {
 		workerName = params[0];
@@ -37,7 +45,7 @@ public class CallConfIntWorker implements Callable<Statistics>{
 		long startTime = System.nanoTime();
 		Statistics retStat =confidentInterval.getConfidenceInterval();
 		logger.info("worker:"+workerName+" time:"+( (System.nanoTime() - startTime) / 1000)+" statistics:"+ retStat.toString());
-		
+		retStat.setTask(this.workerName);
 		return retStat;
 	}
 

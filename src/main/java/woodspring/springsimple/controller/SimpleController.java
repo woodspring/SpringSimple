@@ -30,6 +30,10 @@ public class SimpleController {
 	@Qualifier("ExecService")
 	ConcurrencyService execSrv;
 	
+	@Autowired
+	@Qualifier("ExecutorService")
+	ConcurrencyService excutorService;
+	
 	@GetMapping("/person/before")
 	public List<Person> before() {
 		logger.info("person before ==> ");
@@ -84,6 +88,14 @@ public class SimpleController {
 		logger.info("runExecService taskNum  ==> "+ taskNum);
 		String result = execSrv.runConfdInterval( taskNum);
 		logger.info("ConcurrencyService END:" + result);;
+		return result;
+	}
+	
+	@GetMapping("/future/{taskNum}")
+	public String runExecutorService(@PathVariable Long taskNum) {
+		logger.info("runExecutorService taskNum  ==> "+ taskNum);
+		String result = excutorService.runConfdInterval( taskNum);
+		logger.info("runExecutorService END:" + result);;
 		return result;
 	}
 	
