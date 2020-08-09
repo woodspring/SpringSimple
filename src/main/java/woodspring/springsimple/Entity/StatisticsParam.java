@@ -31,5 +31,37 @@ public class StatisticsParam {
 		this.confd = confd;
 	}
 
+	public String getWorkerName() {
+		return workerName;
+	}
+
+	public void setWorkerName(String workerName) {
+		this.workerName = workerName;
+	}
+
+	public long getSamplesSize() {
+		return samplesSize;
+	}
+
+	public void setSamplesSize(long samplesSize) {
+		this.samplesSize = samplesSize;
+	}
+
+	public long getLoopTimes() {
+		return loopTimes;
+	}
+
+	public void setLoopTimes(long loopTimes) {
+		this.loopTimes = loopTimes;
+	}
+
+	public double getConfd() {
+		return confd;
+	}
+
+	public void setConfd(double confd) {
+		this.confd = confd;
+	}
+
 
 }
